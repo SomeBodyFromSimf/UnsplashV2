@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_photos">
+
+    <fragment
+        android:id="@+id/navigation_fav"
+        android:name="com.mihailchistousov.unsplashv20.ui.favorite.FavFragment"
+        android:label="@string/title_fav"
+        tools:layout="@layout/fragment_fav" >
+        <action
+            android:id="@+id/action_navigation_fav_to_navigation_detail_photo"
+            app:destination="@id/navigation_detail_photo"/>
+        <action
+            android:id="@+id/action_navigation_fav_to_navigation_photos"
+            app:destination="@id/navigation_photos"
+            app:popUpTo="@id/navigation_photos"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_navigation_fav_to_navigation_info"
+            app:destination="@id/navigation_info"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_photos"
+        android:name="com.mihailchistousov.unsplashv20.ui.photos.PhotoFragment"
+        android:label="@string/title_photos"
+        tools:layout="@layout/fragment_photo" >
+        <action
+            android:id="@+id/action_navigation_photos_to_navigation_detail_photo"
+            app:destination="@id/navigation_detail_photo"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:enterAnim="@anim/slide_in_bottom"/>
+        <action
+            android:id="@+id/action_navigation_photos_to_navigation_info"
+            app:destination="@id/navigation_info"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_navigation_photos_to_navigation_fav"
+            app:destination="@id/navigation_fav"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="com.mihailchistousov.unsplashv20.ui.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info">
+        <action
+            android:id="@+id/action_navigation_info_to_navigation_photos"
+            app:destination="@id/navigation_photos"
+            app:popUpTo="@id/navigation_photos"
+            app:popUpToInclusive="true"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_navigation_info_to_navigation_fav"
+            app:destination="@id/navigation_fav"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detail_photo"
+        android:name="com.mihailchistousov.unsplashv20.ui.detailPhoto.DetailPhotoFragment"
+        android:label="DetailPhotoFragment"
+        tools:layout="@layout/fragment_detail_photo"/>
+
+</navigation>

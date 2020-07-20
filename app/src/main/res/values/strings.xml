@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Unsplash V2.0</string>
+    <string name="title_fav">Избранное</string>
+    <string name="title_photo">Фотография</string>
+    <string name="title_photos">Фотографии</string>
+    <string name="title_info">Информация</string>
+    <string name="error_load_photos">Не могу загрузить фотографии!</string>
+    <string name="error_load_photo">Не могу загрузить фотографию!</string>
+    <string name="info_descr">
+        Привет!\n
+        Меня зовут Михаил Чистоусов. \n
+        В проекте использовал: \n
+        1) Hilt\n
+        2) LiveData\n
+        3) Retrofit\n
+        4) Coroutines\n
+        5) Room\n
+        6) MVVM\n
+        7) Glide
+    </string>
+
+</resources>
