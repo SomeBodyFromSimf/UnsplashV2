@@ -16,7 +16,7 @@ abstract class BaseAdapter(
     protected var dataList: MutableList<PhotoWithLike> = mutableListOf()
     val arrayList: ArrayList<PhotoWithLike>
         get() = arrayListOf<PhotoWithLike>().apply {
-            dataList.forEach() {
+            dataList.forEach {
                 add(it)
             }
         }
@@ -40,16 +40,6 @@ abstract class BaseAdapter(
         notifyDataSetChanged()
     }
 
-    fun addData(photos: List<PhotoWithLike>) {
-        dataList.addAll(photos.toMutableList())
-        notifyDataSetChanged()
-    }
-
-    fun clearList() {
-        dataList.clear()
-        notifyDataSetChanged()
-    }
-
     abstract fun onRemoveCompleted(id: String)
 
     inner class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -60,7 +50,7 @@ abstract class BaseAdapter(
             photoWL = photo
             with(itemView) {
                 Glide.with(context)
-                    .load(photoWL.photo.urls?.thumb)
+                    .load(photoWL.photo.urls.thumb)
                     .into(photo_image)
             }
             setLikeImage()

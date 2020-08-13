@@ -1,4 +1,4 @@
-package com.mihailchistousov.unsplashv20.Utils
+package com.mihailchistousov.unsplashv20.utils
 
 
 interface EntityMapper<Entity,DomainModel> {

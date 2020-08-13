@@ -59,7 +59,7 @@ class PagerAdapter(
                     else watcher.addToDB(photo)
                 } }
                 Glide.with(this)
-                    .load(currentPhoto.photo.urls?.full)
+                    .load(currentPhoto.photo.urls.full)
                     .addListener(object: RequestListener<Drawable>{
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                             progress_bar.visibility = View.GONE

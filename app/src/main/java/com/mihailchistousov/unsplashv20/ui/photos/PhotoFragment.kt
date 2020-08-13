@@ -2,8 +2,8 @@ package com.mihailchistousov.unsplashv20.ui.photos
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,12 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.MemoryCategory
 import com.mihailchistousov.unsplashv20.R
-import com.mihailchistousov.unsplashv20.Utils.DataState
-import com.mihailchistousov.unsplashv20.Utils.changeVisibilityBnvAndToolBar
-import com.mihailchistousov.unsplashv20.Utils.setTitle
-import com.mihailchistousov.unsplashv20.base.BaseAdapter
 import com.mihailchistousov.unsplashv20.base.Watcher
 import com.mihailchistousov.unsplashv20.model.Photo
+import com.mihailchistousov.unsplashv20.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_photo.*
 import kotlinx.android.synthetic.main.rec_view.*
@@ -41,7 +38,7 @@ class PhotoFragment : Fragment(R.layout.fragment_photo), Watcher {
         Glide.get(requireContext()).setMemoryCategory(MemoryCategory.HIGH)
         swipe_container.setOnRefreshListener {
             swipe_container.isRefreshing = false
-            viewModel.setPagesOnScreen(1)
+            viewModel.setStateEvent(MainStateEvent.ClearPage)
         }
         subscribe()
     }
@@ -57,38 +54,38 @@ class PhotoFragment : Fragment(R.layout.fragment_photo), Watcher {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val totalItemCount = recyclerView.layoutManager!!.itemCount
-                if (viewModel._status.value !is DataState.Loading && totalItemCount == lastVisibleItemPosition + 1)
-                    viewModel.setPagesOnScreen(viewModel.pagesOnScreen.value?.plus(1))
+                if (viewModel.photos.value !is DataState.Loading && totalItemCount == lastVisibleItemPosition + 1) {
+                    viewModel.setStateEvent(MainStateEvent.AddPage)
+                    Log.d("GGGG", "onScrollStateChanged: ")
+                }
+
             }
         })
     }
 
     private fun subscribe() {
-        viewModel._photosBase.observe(viewLifecycleOwner, Observer {
-            adapter.setData(it)
-        })
-        viewModel.pagesOnScreen.observe(viewLifecycleOwner, Observer {
-            viewModel.setStateEvent(MainStateEvent.GetPhotosEvent(it))
-        })
         viewModel.dbChange.observe(viewLifecycleOwner, Observer {
             val (id, status) = it
-            if(status == PhotoViewModel.Companion.DbENum.ADD) {
+            if (status == DbENum.ADD) {
                 adapter.onAddCompleted(id)
             } else {
                 adapter.onRemoveCompleted(id)
             }
         })
-        viewModel._status.observe(viewLifecycleOwner, Observer {
-            when(it) {
+        viewModel.photos.observe(viewLifecycleOwner, Observer {
+            when (it) {
                 is DataState.Loading -> {
                     progress_bar.visibility = View.VISIBLE
                 }
                 is DataState.Error -> {
                     progress_bar.visibility = View.GONE
-                    Toast.makeText(context, "Error: ${it.exception}", Toast.LENGTH_SHORT).show()
+                    showAlertDialog(it.exception.localizedMessage) {
+                        viewModel.setStateEvent(MainStateEvent.GetPhotosEvent)
+                    }
                 }
                 is DataState.Success -> {
                     progress_bar.visibility = View.GONE
+                    adapter.setData(it.data)
                 }
             }
         })

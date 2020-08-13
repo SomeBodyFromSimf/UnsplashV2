@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.mihailchistousov.unsplashv20.R
-import com.mihailchistousov.unsplashv20.Utils.setTitle
+import com.mihailchistousov.unsplashv20.utils.setTitle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

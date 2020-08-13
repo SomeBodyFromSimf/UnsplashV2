@@ -6,6 +6,7 @@
     <string name="title_info">Информация</string>
     <string name="error_load_photos">Не могу загрузить фотографии!</string>
     <string name="error_load_photo">Не могу загрузить фотографию!</string>
+    <string name="error">Ошибка</string>
     <string name="info_descr">
         Привет!\n
         Меня зовут Михаил Чистоусов. \n
@@ -18,5 +19,8 @@
         6) MVVM\n
         7) Glide
     </string>
+    <string name="yes">Ок</string>
+    <string name="no">Отмена</string>
+    <string name="retry">Повторить</string>
 
 </resources>

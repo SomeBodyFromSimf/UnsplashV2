@@ -22,7 +22,7 @@ object NetworkModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) })
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .build()
@@ -31,9 +31,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideGsonBuilder(): Gson {
-        return GsonBuilder()
-            .excludeFieldsWithoutExposeAnnotation()
-            .create()
+        return GsonBuilder().create()
     }
 
     @Singleton

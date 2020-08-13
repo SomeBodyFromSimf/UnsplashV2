@@ -62,7 +62,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$HiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$HiltVersion"
 
-    def HiltVMVersion="1.0.0-alpha01"
+    def HiltVMVersion="1.0.0-alpha02"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$HiltVMVersion"
     kapt "androidx.hilt:hilt-compiler:$HiltVMVersion"
     //Retrofit

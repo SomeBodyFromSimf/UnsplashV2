@@ -9,8 +9,9 @@ import com.mihailchistousov.unsplashv20.R
 import com.mihailchistousov.unsplashv20.base.Watcher
 import com.mihailchistousov.unsplashv20.model.Photo
 import com.mihailchistousov.unsplashv20.model.PhotoWithLike
-import com.mihailchistousov.unsplashv20.ui.photos.MainStateEvent
 import com.mihailchistousov.unsplashv20.ui.photos.PhotoFragment
+import com.mihailchistousov.unsplashv20.utils.DbENum
+import com.mihailchistousov.unsplashv20.utils.MainStateEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_detail_photo.*
 
@@ -34,7 +35,7 @@ class DetailPhotoFragment : Fragment(R.layout.fragment_detail_photo), Watcher {
     private fun subscribe() {
         viewModel.dbChange.observe(viewLifecycleOwner, Observer {
             val (id, status) = it
-            if(status == DetailPhotoViewModel.Companion.DbENum.ADD) {
+            if (status == DbENum.ADD) {
                 adapter.onAddCompleted(id)
             } else {
                 adapter.onRemoveCompleted(id)
@@ -49,11 +50,11 @@ class DetailPhotoFragment : Fragment(R.layout.fragment_detail_photo), Watcher {
     }
 
     override fun addToDB(photo: Photo) {
-        viewModel.setStateEvent(MainStateEven.AddToDBEven(photo))
+        viewModel.setStateEvent(MainStateEvent.AddToDBEvent(photo))
     }
 
     override fun removeFromDB(photo: Photo) {
-        viewModel.setStateEvent(MainStateEven.RemoveFromD(photo))
+        viewModel.setStateEvent(MainStateEvent.RemoveFromDB(photo))
     }
 
 }
