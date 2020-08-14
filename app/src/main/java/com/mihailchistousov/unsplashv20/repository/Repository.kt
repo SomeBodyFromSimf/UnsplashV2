@@ -6,7 +6,6 @@ import com.mihailchistousov.unsplashv20.database.mapToPhotoList
 import com.mihailchistousov.unsplashv20.model.Photo
 import com.mihailchistousov.unsplashv20.model.PhotoWithLike
 import com.mihailchistousov.unsplashv20.network.UnsplashAPI
-import com.mihailchistousov.unsplashv20.network.mapToPhotoList
 import com.mihailchistousov.unsplashv20.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,11 +17,10 @@ constructor(
     private val photoDao: PhotoDao,
     private val api: UnsplashAPI
 ) {
-    suspend fun getPhotos(page : Int): Flow<DataState<List<PhotoWithLike>>> = flow {
+    suspend fun getPhotos(page: Int): Flow<DataState<List<PhotoWithLike>>> = flow {
         try {
             emit(DataState.Loading)
-            val photos = api.getPhotos(page)
-            val photosFromWWW = api.getPhotos(page).mapToPhotoList()
+            val photosFromWWW = api.getPhotos(page).filterNotNull()
             val photosFromDB = photoDao.getAllPhotos().mapToPhotoList()
             val resultList = mutableListOf<PhotoWithLike>().apply {
                 photosFromWWW.forEach {
@@ -33,17 +31,14 @@ constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(DataState.Error(e))
-        } catch (e: ClassCastException) {
-            e.printStackTrace()
-            emit(DataState.Error(e))
         }
     }
 
-    suspend fun addToDB(photo: Photo){
+    suspend fun addToDB(photo: Photo) {
         photoDao.addPhoto(photo.mapToDBEntity())
     }
 
-    suspend fun removeFromDB(photo: Photo){
+    suspend fun removeFromDB(photo: Photo) {
         photoDao.deletePhoto(photo.mapToDBEntity())
     }
 }
